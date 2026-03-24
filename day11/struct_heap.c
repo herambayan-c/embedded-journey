@@ -50,3 +50,41 @@ int main(){
     }
 printf("done");
 }
+/*// METHOD 2: Single block allocation (acts like an array of structs)
+
+// Allocate memory for 3 Sensor structures (continuous memory block)
+struct Sensor *data = malloc(3 * sizeof(struct Sensor));
+
+// Always check if allocation succeeded
+if(data == NULL){
+    printf("Memory allocation failed\n");
+    return 0;
+}
+
+// Fill data using array-style access
+// data[i] behaves like a normal array element because memory is continuous
+for(int i = 0; i < 3; i++){
+    printf("Enter data for sensor %d:\n", i+1);
+    scanf("%d %s %f", &data[i].id, data[i].name, &data[i].value);
+    // NOTE:
+    // & needed for int and float
+    // name is array → no &
+}
+
+// Print all sensor data
+for(int i = 0; i < 3; i++){
+    printf("Sensor %d: %d %s %.2f\n", i+1, data[i].id, data[i].name, data[i].value);
+}
+
+// Free entire block at once (only ONE free needed)
+free(data);
+data = NULL;  // good practice to avoid dangling pointer
+
+/*
+KEY NOTES:
+- malloc gives ONE continuous block → behaves like array
+- data[i] = *(data + i)
+- Use '.' (not ->) because data[i] is a struct, not a pointer
+- Only one free() needed
+*/
+*/
